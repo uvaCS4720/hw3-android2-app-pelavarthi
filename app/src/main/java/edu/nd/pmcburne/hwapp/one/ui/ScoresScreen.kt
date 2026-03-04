@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import edu.nd.pmcburne.hwapp.one.data.db.GameEntity
 import java.time.Instant
+import java.time.ZoneOffset
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -121,7 +122,9 @@ private fun SimpleDatePickerDialog(
         confirmButton = {
             TextButton(onClick = {
                 val selected = state.selectedDateMillis ?: return@TextButton
-                val date = Instant.ofEpochMilli(selected).atZone(ZoneId.systemDefault()).toLocalDate()
+                val date = Instant.ofEpochMilli(selected)
+                    .atZone(ZoneOffset.UTC)
+                    .toLocalDate()
                 onPick(date)
             }) { Text("OK") }
         },
